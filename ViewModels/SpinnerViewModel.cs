@@ -25,6 +25,11 @@ public sealed class SpinnerViewModel : ViewModelBase
         _wheelFactory = wheelFactory;
         _wheelSpinService = wheelSpinService;
         _wheel = _wheelFactory.CreateDefaultWheel();
+
+        // Align initial wheel position so slice 0 is centered under the top arrow.
+        var sliceAngle = 360.0 / _wheel.Slices.Count;
+        _wheelRotationDegrees = 360.0 - (sliceAngle / 2.0);
+
         _resultText = $"Landed on {_wheel.Slices.First().Number}";
         _spinCommand = new AsyncRelayCommand(SpinAsync, () => !IsSpinning);
     }
