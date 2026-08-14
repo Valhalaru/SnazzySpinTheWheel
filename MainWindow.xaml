@@ -6,7 +6,7 @@
         Width="900"
         Height="980"
         WindowStartupLocation="CenterScreen"
-        Background="#FF1E1E1E">
+        Background="PowderBlue">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
