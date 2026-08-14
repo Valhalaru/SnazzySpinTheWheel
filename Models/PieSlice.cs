@@ -9,9 +9,9 @@ public sealed class PieSlice
 {
     public PieSlice(int number, Color color)
     {
-        if (number < 1 || number > 20)
+        if (number < 1 || number > 50)
         {
-            throw new ArgumentOutOfRangeException(nameof(number), "The slice number must be between 1 and 20.");
+            throw new ArgumentOutOfRangeException(nameof(number), "The slice number must be between 1 and 50.");
         }
 
         Number = number;

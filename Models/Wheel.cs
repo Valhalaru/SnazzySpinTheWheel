@@ -21,9 +21,9 @@ public sealed class Wheel
     {
         var sliceList = slices?.ToList() ?? throw new ArgumentNullException(nameof(slices));
 
-        if (sliceList.Count != 20)
+        if (sliceList.Count > 50)
         {
-            throw new ArgumentException("The wheel must contain exactly 20 slices.", nameof(slices));
+            throw new ArgumentException("The wheel must contain no more than 50 slices.", nameof(slices));
         }
 
         Slices = new ReadOnlyCollection<PieSlice>(sliceList);

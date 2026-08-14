@@ -14,7 +14,7 @@ public partial class App : Application
         base.OnStartup(e);
 
         var services = new ServiceCollection();
-        ConfigureServices(services);
+        ConfigureServices(services, numSlices: 10);
         Services = services.BuildServiceProvider();
 
         var window = Services.GetRequiredService<MainWindow>();
@@ -22,10 +22,11 @@ public partial class App : Application
         window.Show();
     }
 
-    private static void ConfigureServices(IServiceCollection services)
+    private static void ConfigureServices(IServiceCollection services, int numSlices)
     {
         services.AddSingleton<IRandomService, RandomService>();
-        services.AddSingleton<IWheelFactory, WheelFactory>();
+        services.AddSingleton<IWheelFactory>(provider => 
+            new WheelFactory(numSlices, provider.GetRequiredService<IRandomService>()));
         services.AddSingleton<IWheelSpinService, WheelSpinService>();
         services.AddSingleton<SpinnerViewModel>();
         services.AddSingleton<MainWindow>();

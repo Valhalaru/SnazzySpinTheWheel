@@ -4,42 +4,32 @@ using SnazzySpinTheWheel.Models;
 namespace SnazzySpinTheWheel.Services;
 
 /// <summary>
-/// Builds the default wheel with 20 uniquely colored slices.
+/// Factory for creating wheel instances with randomly colored slices.
+/// Uses IRandomService to generate a unique color palette for each wheel.
 /// </summary>
 public sealed class WheelFactory : IWheelFactory
 {
     private readonly IReadOnlyList<Color> _palette;
+    private int _numSlices;
 
-    public WheelFactory()
+    /// <summary>
+    /// Initializes a new WheelFactory with a specified number of slices.
+    /// </summary>
+    /// <param name="numSlices">The number of slices for the wheel.</param>
+    /// <param name="randomService">Service used to generate random colors for the palette.</param>
+    public WheelFactory(int numSlices, IRandomService randomService)
     {
-        _palette = new List<Color>
-        {
-            Colors.Red,
-            Colors.OrangeRed,
-            Colors.Orange,
-            Colors.Gold,
-            Colors.Yellow,
-            Colors.YellowGreen,
-            Colors.Green,
-            Colors.MediumSeaGreen,
-            Colors.Teal,
-            Colors.DeepSkyBlue,
-            Colors.SkyBlue,
-            Colors.RoyalBlue,
-            Colors.MediumBlue,
-            Colors.Indigo,
-            Colors.Purple,
-            Colors.MediumVioletRed,
-            Colors.HotPink,
-            Colors.Crimson,
-            Colors.Chocolate,
-            Colors.DarkCyan
-        };
+        _numSlices = numSlices;
+        _palette = randomService.GenerateRandomPalette(numSlices);
     }
 
+    /// <summary>
+    /// Creates a wheel with the specified number of randomly colored slices.
+    /// </summary>
+    /// <returns>A new Wheel instance containing the configured number of slices with random colors.</returns>
     public Wheel CreateDefaultWheel()
     {
-        var slices = Enumerable.Range(1, 20)
+        var slices = Enumerable.Range(1, _numSlices)
             .Select(index => new PieSlice(index, _palette[index - 1]))
             .ToList();
 
